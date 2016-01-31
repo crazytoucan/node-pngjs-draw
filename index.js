@@ -204,13 +204,14 @@ function color(r,g,b,a)
 * @return {Array(byte)} The blended color
 */
 function blend(background, color) {
+  var bgAlpha = background[3] / 255.0;
   var srcAlpha = color[3] / 255.0;
 
   return [
-    Math.round(color[0] * srcAlpha + background[0] * (1 - srcAlpha)),
-    Math.round(color[1] * srcAlpha + background[1] * (1 - srcAlpha)),
-    Math.round(color[2] * srcAlpha + background[2] * (1 - srcAlpha)),
-    background[3]
+    Math.round(color[0] * srcAlpha + background[0] * bgAlpha * (1 - srcAlpha)),
+    Math.round(color[1] * srcAlpha + background[1] * bgAlpha * (1 - srcAlpha)),
+    Math.round(color[2] * srcAlpha + background[2] * bgAlpha * (1 - srcAlpha)),
+    255 * (1 - (1 - bgAlpha) * (1 - srcAlpha))
   ];
 }
 
